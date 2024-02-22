@@ -1,0 +1,86 @@
+                                             TOMCAT INSTALLATION
+
+Make sure java must be install before tomcat installation
+#yum install java*
+#java --version
+
+
+Step 1: Download Tomcat in zip format by below url
+https://tomcat.apache.org/download-90.cgi
+#wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.78/bin/apache-tomcat-9.0.78.tar.gz
+Step 2: Extract the Tomcat Archive
+#tar -xvf apache-tomcat-9.0.78.tar.gz
+Step 3: Move the Tomcat Directory
+#sudo mv apache-tomcat-9.0.52 /usr/local/tomcat9
+Step 4: Set Environment Variables
+Vi ~/.bashrc
+
+Paste below lines in end of file
+export CATALINA_HOME=/usr/local/tomcat9
+export PATH=$PATH:$CATALINA_HOME/bin
+
+save and quit
+Step 5: Start Tomcat
+sudo /usr/local/tomcat9/bin/startup.sh
+Step 6: Configure Tomcat
+/usr/local/tomcat9/conf/server.xml
+/usr/local/tomcat9/webapps/manager/META-INF/context.xml
+
+
+Now deploying war on tomcat by cli method
+yum install git
+  #git -v
+#  git clone https://github.com/coolgourav147/spring-boot-war-example
+#ll and #cd spring-boot-war-example/
+#yum install maven
+#mvn test -to check project test cases and create folder i.e. target
+If we check there is no folder target
+
+#mvn install -create build of project{create war file}
+After there is one folder available i.e. app in target
+
+Now copy war file
+#cp target/hello-world-0.0.1-SNAPSHOT.war /tmp/
+===================now deploying on tomcat=============in this using same server 
+tomcat must be install
+we access ip:8080
+=========now go inside tomcatdirectory===
+# cd /usr/local/tomcat9/
+#cd webapps/
+
+Now here copy the war file
+#cp /tmp/hello-world-0.0.1-SNAPSHOT.war ./app.war(name of directroy)
+Now we can access by 
+Ip:8080/app 
+ 
+Now configure tomcat login page 
+We need edit (below two file)
+# find / -name context.xml
+/usr/local/tomcat9/webapps/host-manager/META-INF/context.xml
+/usr/local/tomcat9/webapps/manager/META-INF/context.xml
+#vi /usr/local/tomcat9/webapps/host-manager/META-INF/context.xml
+Comment below
+<!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+  allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+second file
+#vim /usr/local/tomcat9/webapps/manager/META-INF/context.xml
+<!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+  allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+now add user
+<role rolename="manager-gui"/>
+<user username="tomcat" password="s3cret" roles="manager-gui"/>
+
+Add above lines before below line
+</tomcat-users>
+
+Stop and start tomcat 
+
+NOW TO DEPLOY WAR FILE USING GUI METHOD
+Select -war file
+ 
+
+Now check one path add extra
+ 
+Now click on that it directly landed on page
+ 
+
